@@ -1,0 +1,59 @@
+<form class="form-horizontal">
+ <h3>{{ _('Mote Colours') }}</h3>
+    <div class="control-group">
+
+    <label class="control-label">{{ _('Mote Type') }}</label>
+    <div class="controls">
+         <input type="test" class="input-mini" data-bind="value: settings.plugins.MoteControl.motetype" readonly>
+    </div>
+
+        <label class="control-label">{{ _('On OctoPrint Startup') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.start_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.start_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.start_col_b" >
+        </div>
+
+        <label class="control-label">{{ _('Printer Connected') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.conn_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.conn_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.conn_col_b" >
+        </div>
+
+        <label class="control-label">{{ _('File Uploaded') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.upload_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.upload_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.upload_col_b" >
+            Duration: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.upload_dur" > secs
+        </div>
+
+        <label class="control-label">{{ _('Active Printing') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.print_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.print_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.print_col_b" >
+        <label class="checkbox">
+            <input type="checkbox" data-bind="checked: settings.plugins.MoteControl.lightOnConnect" id="settings-lightOnConnect"> {{ _('LEDs on only when a client is connected') }}
+        </label>
+        </div>
+
+        <label class="control-label">{{ _('Print Finished') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.done_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.done_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.done_col_b" >
+        </div>
+
+        <label class="control-label">{{ _('Error') }}</label>
+        <div class="controls">
+            R: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.error_col_r" >
+            G: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.error_col_g" >
+            B: <input type="number" step="any" min="0" max="255" class="input-mini" data-bind="value: settings.plugins.MoteControl.error_col_b" >
+        </div>
+
+
+
+    </div>
+</form>
