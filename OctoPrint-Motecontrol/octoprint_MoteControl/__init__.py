@@ -25,8 +25,6 @@ class MoteControlPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.SettingsPlugin,
                        octoprint.plugin.EventHandlerPlugin):
     def on_after_startup(self):
-        global activeClient
-        activeClient = False
         self._logger.info("Mote Control Plugin")
         if moteType == 'PHAT':
             #for c in range(1,5):
@@ -73,7 +71,6 @@ class MoteControlPlugin(octoprint.plugin.StartupPlugin,
                 #mote.configure_channel(c, 16, False)
 
     def on_event(self,event,payload):
-        global activeClient
         #self._logger.info("Mote Event handler:"+ str(event))
         if event == "Startup": # default 4 Blue flashes
             self.moteUSB()
@@ -95,17 +92,16 @@ class MoteControlPlugin(octoprint.plugin.StartupPlugin,
                 time.sleep(1)
 
         if event == "Connected": # default Green
-            if (self._settings.get(["lightOnConnect"]) and activeClient) or (not self._settings.get(["lightOnConnect"])):
-                self.moteUSB()
-                #mote = Mote() # uncomment for USB mote hub
-                for c in range(1,5):
-                    mote.configure_channel(c, 16, False)
-                for c in range(1,5):
-                    for pixel in range(16):
-                        mote.set_pixel(c, pixel, int(self._settings.get(["conn_col_r"])),
-                                                 int(self._settings.get(["conn_col_g"])),
-                                                 int(self._settings.get(["conn_col_b"])))
-                        mote.show()
+            self.moteUSB()
+            #mote = Mote() # uncomment for USB mote hub
+            for c in range(1,5):
+                mote.configure_channel(c, 16, False)
+            for c in range(1,5):
+                for pixel in range(16):
+                    mote.set_pixel(c, pixel, int(self._settings.get(["conn_col_r"])),
+                                             int(self._settings.get(["conn_col_g"])),
+                                             int(self._settings.get(["conn_col_b"])))
+                    mote.show()
 
         if event == "Disconnected": #  default Off
             self.moteUSB()
@@ -136,20 +132,44 @@ class MoteControlPlugin(octoprint.plugin.StartupPlugin,
                     mote.show()
 
         if event == "PrintStarted": # default white
-            if (self._settings.get(["lightOnConnect"]) and activeClient) or (not self._settings.get(["lightOnConnect"])):
                 #mote = Mote() # uncomment for USB mote hub
-                self.moteUSB()
-                for c in range(1,5):
-                    mote.configure_channel(c, 16, False)
-                for c in range(1,5):
-                    for pixel in range(16):
-                        mote.set_pixel(c, pixel, int(self._settings.get(["print_col_r"])),
-                                                 int(self._settings.get(["print_col_g"])),
-                                                 int(self._settings.get(["print_col_b"])))
-                        mote.show()
+            self.moteUSB()
+            for c in range(1,5):
+                mote.configure_channel(c, 16, False)
+            for c in range(1,5):
+                for pixel in range(16):
+                    mote.set_pixel(c, pixel, int(self._settings.get(["print_col_r"])),
+                                             int(self._settings.get(["print_col_g"])),
+                                             int(self._settings.get(["print_col_b"])))
+                    mote.show()
 
         if event == "PrintFailed" or event == "Error": # default red
-            if (self._settings.get(["lightOnConnect"]) and activeClient) or (not self._settings.get(["lightOnConnect"])):
+            self.moteUSB()
+            #mote = Mote() # uncomment for USB mote hub
+            for c in range(1,5):
+                mote.configure_channel(c, 16, False)
+            for c in range(1,5):
+                for pixel in range(16):
+                    mote.set_pixel(c, pixel, int(self._settings.get(["error_col_r"])),
+                                             int(self._settings.get(["error_col_g"])),
+                                             int(self._settings.get(["error_col_b"])))
+                    mote.show()
+
+        if event == "PrintDone": # default pink
+
+            self.moteUSB()
+            #mote = Mote() # uncomment for USB mote hub
+            for c in range(1,5):
+                mote.configure_channel(c, 16, False)
+            for c in range(1,5):
+                for pixel in range(16):
+                    mote.set_pixel(c, pixel, int(self._settings.get(["done_col_r"])),
+                                             int(self._settings.get(["done_col_g"])),
+                                             int(self._settings.get(["done_col_b"])))
+                    mote.show()
+
+        if event == "ClientOpened": # default white
+            if (self._settings.get(["lightOnConnect"]):
                 self.moteUSB()
                 #mote = Mote() # uncomment for USB mote hub
                 for c in range(1,5):
@@ -161,24 +181,16 @@ class MoteControlPlugin(octoprint.plugin.StartupPlugin,
                                                  int(self._settings.get(["error_col_b"])))
                         mote.show()
 
-        if event == "PrintDone": # default pink
-            if (self._settings.get(["lightOnConnect"]) and activeClient) or (not self._settings.get(["lightOnConnect"])):
+        if event == "ClientClosed": # default white
+            if (self._settings.get(["lightOnConnect"]):
                 self.moteUSB()
                 #mote = Mote() # uncomment for USB mote hub
                 for c in range(1,5):
                     mote.configure_channel(c, 16, False)
                 for c in range(1,5):
                     for pixel in range(16):
-                        mote.set_pixel(c, pixel, int(self._settings.get(["done_col_r"])),
-                                                 int(self._settings.get(["done_col_g"])),
-                                                 int(self._settings.get(["done_col_b"])))
+                        mote.set_pixel(c, pixel, 0, 0, 0)
                         mote.show()
-
-        if event == "ClientOpened": # default white
-            activeClient = True
-
-        if event == "ClientClosed": # default white
-            activeClient = False
 
 __plugin_name__ = "Mote Control"
 __plugin_implementation__ = MoteControlPlugin()
